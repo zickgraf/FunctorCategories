@@ -211,7 +211,7 @@ InstallMethod( YonedaEmbedding,
         [ IsCapCategory and HasRangeCategoryOfHomomorphismStructure ],
         
   function ( B )
-    local A, PSh, B_op, objs, mors, name, Yoneda;
+    local A, PSh, objs, mors, name, Yoneda;
     
     A := UnderlyingQuiverAlgebra( B );
     
@@ -222,8 +222,6 @@ InstallMethod( YonedaEmbedding,
     fi;
     
     PSh := PreSheaves( B );
-    
-    B_op := Source( PSh );
     
     objs := SetOfObjects( B );
     
@@ -237,7 +235,7 @@ InstallMethod( YonedaEmbedding,
       function ( obj )
         local Yo;
         
-        Yo := AsObjectInFunctorCategory( B_op,
+        Yo := AsObjectInFunctorCategory( PSh,
                       List( objs, o -> HomStructure( o, obj ) ),
                       List( mors, m -> HomStructure( m, obj ) ) );
         
@@ -250,7 +248,7 @@ InstallMethod( YonedaEmbedding,
     AddMorphismFunction( Yoneda,
       function ( s, mor, r )
         
-        return AsMorphismInFunctorCategory(
+        return AsMorphismInFunctorCategoryByValues( PSh,
                        s,
                        List( objs, o -> HomStructure( o, mor ) ),
                        r );

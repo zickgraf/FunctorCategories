@@ -74,7 +74,7 @@ InstallMethod( CreateQuiver,
     s := MapOfFinSets( A, List( arr, a -> a[1] ), V );
     t := MapOfFinSets( A, List( arr, a -> a[2] ), V );
     
-    presheaf := AsObjectInFunctorCategory( Source( UnderlyingCategory( category_of_quivers ) ), [ V, A ], [ s, t ] );
+    presheaf := AsObjectInFunctorCategory( UnderlyingCategory( category_of_quivers ), [ V, A ], [ s, t ] );
     
     return ObjectConstructor( category_of_quivers, presheaf );
     

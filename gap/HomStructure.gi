@@ -77,7 +77,7 @@ InstallMethodForCompilerForCAP( AuxiliaryMorphism,
     nr_o := Length( objs );
     S_o_vals := ValuesOnAllObjects( S );
     R_o_vals := ValuesOnAllObjects( R );
-
+    
     mors := SetOfGeneratingMorphisms( algebroid );
     nr_m := Length( mors );
     S_m_vals := ValuesOnAllGeneratingMorphisms( S );
@@ -254,7 +254,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
                                       i ) )
                       );
         
-        return AsMorphismInFunctorCategory(
+        return AsMorphismInFunctorCategoryByValues( Hom,
                        S,
                        List( [ 1 .. o ],
                              i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( range_category,
@@ -344,7 +344,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
                                          iota ) ) );
           
           return List( [ 1 .. Length( basis ) ],
-                       j -> AsMorphismInFunctorCategory(
+                       j -> AsMorphismInFunctorCategoryByValues( Hom,
                                S,
                                List( [ 1 .. nr_o ],
                                      i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( range_category,

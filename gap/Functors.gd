@@ -51,6 +51,7 @@ DeclareAttribute( "NerveTruncatedInDegree2", IsCapCategory );
 #! @Arguments B
 #! @Returns a &CAP; functor
 DeclareAttribute( "YonedaEmbedding", IsCapCategory );
+CapJitAddTypeSignature( "YonedaEmbedding", [ IsCapCategory ], IsCapFunctor );
 
 ##
 DeclareAttribute( "YonedaEmbeddingOfOppositeOfSourceCategory",

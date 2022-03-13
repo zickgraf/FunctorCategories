@@ -88,7 +88,7 @@ Dependencies := rec(
   GAP := ">= 4.11.1",
   NeededOtherPackages := [
                    [ "GAPDoc", ">= 1.5" ],
-                   [ "CAP", ">= 2022.05-07" ],
+                   [ "CAP", ">= 2022.05-08" ],
                    [ "MonoidalCategories", ">= 2020.03.01" ],
                    [ "Algebroids", ">= 2022.05-05" ],
                    [ "RingsForHomalg", ">= 2020.02.04" ],
@@ -99,7 +99,9 @@ Dependencies := rec(
                    [ "Toposes", ">= 2022.04-28" ],
                    [ "FinSetsForCAP", ">= 2022.05-05" ],
                    ],
-  SuggestedOtherPackages := [ ],
+  SuggestedOtherPackages := [
+                [ "CompilerForCAP", ">= 2022.05-11" ],
+                ],
   ExternalConditions := [ ],
 ),
 
