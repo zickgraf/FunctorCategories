@@ -66,6 +66,12 @@ DeclareGlobalVariable( "CAP_INTERNAL_METHOD_NAME_LIST_FOR_FUNCTOR_CATEGORY" );
 DeclareAttribute( "Source",
         IsObjectInFunctorCategory );
 
+CapJitAddTypeSignature( "Source", [ IsObjectInFunctorCategory ],
+  function ( input_types )
+    return rec( filter := IsCapCategory,
+                category := Source( input_types[1].category ) );
+end );
+
 #! @Description
 #!  The target of the functor underlying the functor object <A>F</A>.
 #! @Arguments F
@@ -73,12 +79,81 @@ DeclareAttribute( "Source",
 DeclareAttribute( "Range",
         IsObjectInFunctorCategory );
 
+CapJitAddTypeSignature( "Range", [ IsObjectInFunctorCategory ],
+  function ( input_types )
+    return rec( filter := IsCapCategory,
+                category := Range( input_types[1].category ) );
+end );
+
 #! @Description
-#!  The functor underlying the functor object <A>F</A>.
-#! @Arguments F
-#! @Returns a &CAP; functor
+#!  The 2-cell underlying the functor object <A>F_or_eta</A>.
+#! @Arguments F_or_eta
+#! @Returns a &CAP; functor or natural transformation
 DeclareAttribute( "UnderlyingCapTwoCategoryCell",
-        IsObject );
+        IsCellInFunctorCategory );
+
+CapJitAddTypeSignature( "UnderlyingCapTwoCategoryCell", [ IsObjectInFunctorCategory ],
+  function ( input_types )
+    return rec( filter := IsCapFunctor,
+                source_category := Source( input_types[1].category ),
+                range_category := Range( input_types[1].category ) );
+end );
+
+CapJitAddTypeSignature( "UnderlyingCapTwoCategoryCell", [ IsMorphismInFunctorCategory ],
+  function ( input_types )
+    return rec( filter := IsCapNaturalTransformation,
+                source_category := Source( input_types[1].category ),
+                range_category := Range( input_types[1].category ) );
+end );
+
+##
+DeclareAttribute( "FunctorOnObjects",
+        IsObjectInFunctorCategory );
+
+CapJitAddTypeSignature( "FunctorOnObjects", [ IsObjectInFunctorCategory ],
+  function ( input_types )
+    
+    Assert( 0, IsFunctorCategory( input_types[1].category ) );
+    
+    return rec( filter := IsFunction,
+                signature :=
+                [ [ rec( filter := Source( input_types[1].category )!.object_representation, category := Source( input_types[1].category ) ) ],
+                  rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ) ] );
+end );
+
+##
+DeclareAttribute( "FunctorOnMorphisms",
+        IsObjectInFunctorCategory );
+
+CapJitAddTypeSignature( "FunctorOnMorphisms", [ IsObjectInFunctorCategory ],
+  function ( input_types )
+    
+    Assert( 0, IsFunctorCategory( input_types[1].category ) );
+    
+    return rec( filter := IsFunction,
+                signature :=
+                [ [ rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ),
+                    rec( filter := Source( input_types[1].category )!.morphism_representation, category := Source( input_types[1].category ) ),
+                    rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ) ],
+                  rec( filter := Range( input_types[1].category )!.morphism_representation, category := Range( input_types[1].category ) ) ] );
+end );
+
+##
+DeclareAttribute( "NaturalTransformationOnObjects",
+        IsMorphismInFunctorCategory );
+
+CapJitAddTypeSignature( "NaturalTransformationOnObjects", [ IsMorphismInFunctorCategory ],
+  function ( input_types )
+    
+    Assert( 0, IsFunctorCategory( input_types[1].category ) );
+    
+    return rec( filter := IsFunction,
+                signature :=
+                [ [ rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ),
+                    rec( filter := Source( input_types[1].category )!.object_representation, category := Source( input_types[1].category ) ),
+                    rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ) ],
+                  rec( filter := Range( input_types[1].category )!.morphism_representation, category := Range( input_types[1].category ) ) ] );
+end );
 
 #! @Description
 #!  The argument is a category of functors <A>Hom</A> into some matrix category of a homalg field.
@@ -115,65 +190,65 @@ DeclareAttribute( "SimpleObjects",
 #!  The shorthand is <A>F</A>(<A>c</A>).
 #! @Arguments F, c
 #! @Returns a &CAP; cell
-DeclareOperation( "ApplyCell",
-        [ IsObjectInFunctorCategory, IsCapCategoryCell ] );
+DeclareOperation( "ApplyObjectInFunctorCategoryToObject",
+        [ IsFunctorCategory, IsObjectInFunctorCategory, IsCapCategoryObject ] );
+
+DeclareOperation( "ApplyObjectInFunctorCategoryToMorphism",
+        [ IsFunctorCategory, IsObjectInFunctorCategory, IsCapCategoryMorphism ] );
 
 #! @Description
 #!  Apply the natural transformation <A>eta</A> (as an object in the corresponding Hom-category) to the object <A>o</A>.
 #!  The shorthand is <A>eta</A>(<A>o</A>).
 #! @Arguments eta, o
-DeclareOperation( "ApplyCell",
-        [ IsMorphismInFunctorCategory, IsCapCategoryObject ] );
+DeclareOperation( "ApplyMorphismInFunctorCategoryToObject",
+        [ IsFunctorCategory, IsMorphismInFunctorCategory, IsCapCategoryObject ] );
 
-#! @Description
-#! @Returns Four morphisms that form a commutative square that appears in the definition of natural transformations
-#! (as an object in the corresponding Hom-category).
-#! These are the four morphisms of the compatibility diagram of a natural transformation <A>eta</A> with the morphism <A>mor</A>.
-#! @Arguments eta, mor
-DeclareOperation( "ApplyCell",
-        [ IsMorphismInFunctorCategory, IsCapCategoryMorphism ] );
-
-##
-DeclareOperation( "ApplyCell",
-        [ IsCapFunctor, IsCapCategoryCell ] );
-
-##
-DeclareOperation( "ApplyCell",
-        [ IsCapNaturalTransformation, IsCapCategoryObject ] );
-
-##
-DeclareOperation( "ApplyCell",
-        [ IsCapNaturalTransformation, IsCapCategoryMorphism ] );
-
-##
-DeclareOperation( "ApplyCell",
-        [ IsList, IsCapCategoryCell ] );
-
-##
-DeclareOperation( "ApplyCell",
-        [ IsInt, IsCapCategoryCell ] );
-
+DeclareOperation( "ApplyMorphismInFunctorCategoryToMorphism",
+        [ IsFunctorCategory, IsMorphismInFunctorCategory, IsCapCategoryMorphism ] );
 
 ##
 DeclareOperation( "CapFunctor",
         [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
+CapJitAddTypeSignature( "CapFunctor", [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ], IsCapFunctor );
 
 #! @Description
-#!  Returns the values of the cell <A>c</A> in the functor category <A>Hom</A>
-#!  (which is either a functor or a natural transformation)
+#!  Returns the values of the functor <A>F</A> in the functor category <A>Hom</A>
 #!  on all objects of the source category of <A>Hom</A>.
-#! @Arguments c
+#! @Arguments Hom, F
 #! @Returns a list
+DeclareOperation( "ValuesOfFunctorOnAllObjects",
+        [ IsFunctorCategory, IsObjectInFunctorCategory ] );
+
 DeclareOperation( "ValuesOnAllObjects",
-        [ IsCellInFunctorCategory ] );
+        [ IsObjectInFunctorCategory ] );
 
 #! @Description
-#!  Returns the values of the functor <A>F</A>
+#!  Returns the values of the functor <A>F</A> in the functor category <A>Hom</A>
 #!  on all morphisms of the source category.
-#! @Arguments F
+#! @Arguments Hom, F
 #! @Returns a list
+DeclareOperation( "ValuesOfFunctorOnAllGeneratingMorphisms",
+        [ IsFunctorCategory, IsObjectInFunctorCategory ] );
+
 DeclareOperation( "ValuesOnAllGeneratingMorphisms",
         [ IsObjectInFunctorCategory ] );
+
+##
+DeclareOperation( "NaturalTransformationByFunction",
+        [ IsCapFunctor, IsCapFunctor, IsFunction ] );
+CapJitAddTypeSignature( "NaturalTransformationByFunction", [ IsCapFunctor, IsCapFunctor, IsFunction ], IsCapNaturalTransformation );
+CapJitAddTypeSignature( "NaturalTransformation", [ IsList, IsCapFunctor, IsCapFunctor ], IsCapNaturalTransformation );
+
+#! @Description
+#!  Returns the values of the natural transformation <A>eta</A> in the functor category <A>Hom</A>
+#!  on all objects of the source category of <A>Hom</A>.
+#! @Arguments Hom, eta
+#! @Returns a list
+DeclareOperation( "ValuesOfNaturalTransformationOnAllObjects",
+        [ IsCapCategory, IsMorphismInFunctorCategory ] );
+
+DeclareOperation( "ValuesOnAllObjects",
+        [ IsMorphismInFunctorCategory ] );
 
 ####################################
 #
@@ -242,7 +317,15 @@ DeclareAttribute( "CategoryOfInternalCategories",
 #! @Returns an object in a &CAP; category
 #! @Group AsObjectInFunctorCategory
 DeclareOperation( "AsObjectInFunctorCategory",
-        [ IsCapCategory, IsCapFunctor ] );
+        [ IsFunctorCategory, IsCapFunctor ] );
+CapJitAddTypeSignature( "AsObjectInFunctorCategory", [ IsFunctorCategory, IsCapFunctor ],
+  function ( input_types )
+    
+    Assert( 0, IsFunctorCategory( input_types[1].category ) );
+    
+    return rec( filter := input_types[1].category!.object_representation,
+                category := input_types[1].category );
+end );
 
 #! @Arguments F
 #! @Group AsObjectInFunctorCategory
@@ -280,7 +363,15 @@ DeclareOperation( "AsObjectInFunctorCategory",
 #! @Returns a morphism in a &CAP; category
 #! @Group AsMorphismInFunctorCategory
 DeclareOperation( "AsMorphismInFunctorCategory",
-        [ IsCapCategory, IsCapNaturalTransformation ] );
+        [ IsFunctorCategory, IsCapNaturalTransformation ] );
+CapJitAddTypeSignature( "AsMorphismInFunctorCategory", [ IsFunctorCategory, IsCapNaturalTransformation ],
+  function ( input_types )
+    
+    Assert( 0, IsFunctorCategory( input_types[1].category ) );
+    
+    return rec( filter := input_types[1].category!.morphism_representation,
+                category := input_types[1].category );
+end );
 
 #! @Arguments eta
 #! @Group AsMorphismInFunctorCategory
@@ -300,3 +391,14 @@ DeclareOperation( "AsMorphismInFunctorCategory",
 #! @Group AsMorphismInFunctorCategory
 DeclareOperation( "AsMorphismInFunctorCategory",
         [ IsObjectInFunctorCategory, IsList, IsObjectInFunctorCategory ] );
+
+DeclareOperation( "AsMorphismInFunctorCategory",
+        [ IsFunctorCategory, IsObjectInFunctorCategory, IsList, IsObjectInFunctorCategory ] );
+CapJitAddTypeSignature( "AsMorphismInFunctorCategory", [ IsFunctorCategory, IsObjectInFunctorCategory, IsList, IsObjectInFunctorCategory ],
+  function ( input_types )
+    
+    Assert( 0, IsFunctorCategory( input_types[1].category ) );
+    
+    return rec( filter := input_types[1].category!.morphism_representation,
+                category := input_types[1].category );
+end );

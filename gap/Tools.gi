@@ -13,3 +13,12 @@ InstallOtherMethod( QUO,
     return HomalgMatrix( mat, CommutativeRingOfLinearCategory( A ) ) / A;
     
 end );
+
+##
+BindGlobal( "ForAllWithOneArgument",
+  function( L )
+
+    return not ( false in L );
+
+end );
+CapJitAddTypeSignature( "ForAllWithOneArgument", [ IsList ], IsBool );
