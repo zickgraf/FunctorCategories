@@ -125,30 +125,6 @@ CapJitAddLogicTemplate(
 
 CapJitAddLogicTemplate(
     rec(
-        variable_names := [ "source", "range", "natural_transformation_on_objects" ],
-        src_template := "NaturalTransformationOperation( NaturalTransformationByFunction( source, range, natural_transformation_on_objects ) )",
-        dst_template := "natural_transformation_on_objects",
-    )
-);
-
-CapJitAddLogicTemplate(
-    rec(
-        variable_names := [ "source", "range", "natural_transformation_on_objects" ],
-        src_template := "Source( NaturalTransformationByFunction( source, range, natural_transformation_on_objects ) )",
-        dst_template := "source",
-    )
-);
-
-CapJitAddLogicTemplate(
-    rec(
-        variable_names := [ "source", "range", "natural_transformation_on_objects" ],
-        src_template := "Range( NaturalTransformationByFunction( source, range, natural_transformation_on_objects ) )",
-        dst_template := "range",
-    )
-);
-
-CapJitAddLogicTemplate(
-    rec(
         variable_names := [ "source", "natural_transformation_on_objects", "range" ],
         src_template := "Source( NaturalTransformation( source, natural_transformation_on_objects, range ) )",
         dst_template := "source",

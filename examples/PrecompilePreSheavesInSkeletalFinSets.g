@@ -56,6 +56,7 @@ CapJitPrecompileCategoryAndCompareResult(
                      "HomomorphismStructureOnObjects",
                      #"HomomorphismStructureOnMorphismsWithGivenObjects",
                      #"InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism",
+                     "MorphismsOfExternalHom",
                      #"ExponentialOnObjects",
                      ]
 );;

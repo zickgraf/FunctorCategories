@@ -23,14 +23,14 @@ InstallMethodForCompilerForCAP( ExternalHomDiagram,
     
     objs := SetOfObjects( source_category );
     nr_o := Length( objs );
-    F_o := ValuesOfFunctorOnAllObjects( Hom, F );
-    G_o := ValuesOfFunctorOnAllObjects( Hom, G );
+    F_o := ValuesOnAllObjects( F );
+    G_o := ValuesOnAllObjects( G );
     
     mors := SetOfGeneratingMorphisms( source_category );
     nr_m := Length( mors );
     
-    F_m := ValuesOfFunctorOnAllGeneratingMorphisms( Hom, F );
-    G_m := ValuesOfFunctorOnAllGeneratingMorphisms( Hom, G );
+    F_m := ValuesOnAllGeneratingMorphisms( F );
+    G_m := ValuesOnAllGeneratingMorphisms( G );
     
     sources := List( [ 1 .. nr_o ],
                      i -> HomomorphismStructureOnObjects( range_category,
@@ -75,13 +75,13 @@ InstallMethodForCompilerForCAP( AuxiliaryMorphism,
     
     objs := SetOfObjects( algebroid );
     nr_o := Length( objs );
-    S_o_vals := ValuesOfFunctorOnAllObjects( Hom, S );
-    R_o_vals := ValuesOfFunctorOnAllObjects( Hom, R );
+    S_o_vals := ValuesOnAllObjects( S );
+    R_o_vals := ValuesOnAllObjects( R );
     
     mors := SetOfGeneratingMorphisms( algebroid );
     nr_m := Length( mors );
-    S_m_vals := ValuesOfFunctorOnAllGeneratingMorphisms( Hom, S );
-    R_m_vals := ValuesOfFunctorOnAllGeneratingMorphisms( Hom, R );
+    S_m_vals := ValuesOnAllGeneratingMorphisms( S );
+    R_m_vals := ValuesOnAllGeneratingMorphisms( R );
     
     source_summands := List( [ 1 .. nr_o ],
                              i -> HomomorphismStructureOnObjects( range_category,
@@ -202,7 +202,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
         
         D := DistinguishedObjectOfHomomorphismStructure( Hom );
         
-        tau := List( ValuesOfNaturalTransformationOnAllObjects( Hom, eta ),
+        tau := List( ValuesOnAllObjects( eta ),
                      eta_o -> InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( range_category, eta_o ) );
         
         diagram := List( tau, Source );
@@ -228,9 +228,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
         
         range_category_of_hom_structure := RangeCategoryOfHomomorphismStructure( Hom );
         
-        S_o_vals := ValuesOfFunctorOnAllObjects( Hom, S );
+        S_o_vals := ValuesOnAllObjects( S );
         
-        R_o_vals := ValuesOfFunctorOnAllObjects( Hom, R );
+        R_o_vals := ValuesOnAllObjects( R );
         
         map := AuxiliaryMorphism( Hom, S, R );
         
@@ -254,7 +254,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
                                       i ) )
                       );
         
-        return AsMorphismInFunctorCategory( Hom,
+        return AsMorphismInFunctorCategoryByValues( Hom,
                        S,
                        List( [ 1 .. o ],
                              i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( range_category,
@@ -274,8 +274,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
         
         range_category_of_hom_structure := RangeCategoryOfHomomorphismStructure( Hom );
         
-        eta_vals := ValuesOfNaturalTransformationOnAllObjects( Hom, eta );
-        mu_vals := ValuesOfNaturalTransformationOnAllObjects( Hom, mu );
+        eta_vals := ValuesOnAllObjects( eta );
+        mu_vals := ValuesOnAllObjects( mu );
         
         o := Length( SetOfObjects( Source( Hom ) ) );
         
@@ -309,9 +309,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
           
           D := DistinguishedObjectOfHomomorphismStructure( Hom );
           
-          S_o_vals := ValuesOfFunctorOnAllObjects( Hom, S );
+          S_o_vals := ValuesOnAllObjects( S );
           
-          R_o_vals := ValuesOfFunctorOnAllObjects( Hom, R );
+          R_o_vals := ValuesOnAllObjects( R );
           
           nr_o := Length( SetOfObjects( Source( Hom ) ) );
           
@@ -344,7 +344,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_HOMOMORPHISM_STRUCTURE_TO_FUNCTOR_CATEG
                                          iota ) ) );
           
           return List( [ 1 .. Length( basis ) ],
-                       j -> AsMorphismInFunctorCategory( Hom,
+                       j -> AsMorphismInFunctorCategoryByValues( Hom,
                                S,
                                List( [ 1 .. nr_o ],
                                      i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( range_category,
