@@ -691,7 +691,7 @@ InstallMethodWithCache( FunctorCategory,
               function( input_arguments )
                 local L;
                 
-                L := [ input_arguments ];
+                L := NTuple( number_of_arguments, input_arguments );
                 
                 ## due to issue https://github.com/homalg-project/CAP_project/issues/802
                 ## the result is not saved if operation_name is called with Range( cat ) as first argument
@@ -788,7 +788,7 @@ InstallMethodWithCache( FunctorCategory,
                 
                 C := Range( cat );
                 
-                i_arg := [ input_arguments ];
+                i_arg := NTuple( number_of_arguments, input_arguments );
                 
                 functor_on_objects :=
                   function ( objB )
@@ -827,7 +827,7 @@ InstallMethodWithCache( FunctorCategory,
                 
                 C := Range( cat );
                 
-                i_arg := [ input_arguments ];
+                i_arg := NTuple( number_of_arguments, input_arguments );
                 
                 functor_on_objects :=
                   function ( objB )
@@ -863,7 +863,7 @@ InstallMethodWithCache( FunctorCategory,
                 
                 C := Range( cat );
                 
-                i_arg := [ input_arguments ];
+                i_arg := NTuple( number_of_arguments, input_arguments );
                 
                 functor_on_objects :=
                   function ( objB )
@@ -914,7 +914,7 @@ InstallMethodWithCache( FunctorCategory,
             B := Source( cat );
             C := Range( cat );
             
-            i_arg := [ input_arguments ];
+            i_arg := NTuple( number_of_arguments, input_arguments );
             
             natural_transformation_on_objects :=
               function ( source, objB, range )
