@@ -261,7 +261,7 @@ InstallMethodForCompilerForCAP( ApplyObjectInFunctorCategoryToObject,
   function ( Hom, F, objB )
     local pos;
     
-    pos := Position( SetOfObjects( Source( Hom ) ), objB );
+    pos := SafePosition( SetOfObjects( Source( Hom ) ), objB );
     
     return ValuesOnAllObjects( F )[pos];
     
@@ -297,8 +297,10 @@ InstallMethodForCompilerForCAP( ApplyObjectInFunctorCategoryToMorphism,
   function ( Hom, F, morB )
     local pos;
     
+    #% CAP_JIT_DROP_NEXT_STATEMENT
     pos := Position( SetOfGeneratingMorphisms( Source( Hom ) ), morB );
     
+    #% CAP_JIT_DROP_NEXT_STATEMENT
     if IsInt( pos ) then
         return ValuesOnAllGeneratingMorphisms( F )[pos];
     fi;
@@ -318,7 +320,7 @@ InstallMethodForCompilerForCAP( ApplyMorphismInFunctorCategoryToObject,
   function ( Hom, eta, objB )
     local pos;
     
-    pos := Position( SetOfObjects( Source( Hom ) ), objB );
+    pos := SafePosition( SetOfObjects( Source( Hom ) ), objB );
     
     return ValuesOnAllObjects( eta )[pos];
     
@@ -437,8 +439,10 @@ CapJitAddTypeSignature( "ObjectifyObjectForCAPWithAttributes",
     
 end );
 
+DeclareOperation( "AsObjectInFunctorCategoryByFunctions", [ IsFunctorCategory, IsFunction, IsFunction ] );
+
 ##
-InstallMethod( AsObjectInFunctorCategory,
+InstallMethodForCompilerForCAP( AsObjectInFunctorCategoryByFunctions,
         "for a functor category and two functions",
         [ IsFunctorCategory, IsFunction, IsFunction ],
         
@@ -768,7 +772,7 @@ InstallMethodWithCache( FunctorCategory,
                     return morC;
                 end;
                 
-                return AsObjectInFunctorCategory( cat, functor_on_objects, functor_on_morphisms );
+                return AsObjectInFunctorCategoryByFunctions( cat, functor_on_objects, functor_on_morphisms );
                 
             end
             """,
@@ -805,7 +809,7 @@ InstallMethodWithCache( FunctorCategory,
                     
                 end;
                 
-                return AsObjectInFunctorCategory( cat, functor_on_objects, functor_on_morphisms );
+                return AsObjectInFunctorCategoryByFunctions( cat, functor_on_objects, functor_on_morphisms );
                 
             end
             """,
@@ -839,7 +843,7 @@ InstallMethodWithCache( FunctorCategory,
                     
                 end;
                 
-                return AsObjectInFunctorCategory( cat, functor_on_objects, functor_on_morphisms );
+                return AsObjectInFunctorCategoryByFunctions( cat, functor_on_objects, functor_on_morphisms );
                 
             end
             """,
@@ -880,7 +884,7 @@ InstallMethodWithCache( FunctorCategory,
                     
                 end;
                 
-                return AsObjectInFunctorCategory( cat, functor_on_objects, functor_on_morphisms );
+                return AsObjectInFunctorCategoryByFunctions( cat, functor_on_objects, functor_on_morphisms );
                 
             end
             """,
@@ -1460,7 +1464,7 @@ InstallMethodWithCache( FunctorCategory,
                 
             end;
             
-            return AsObjectInFunctorCategory( Hom, functor_on_objects, functor_on_morphisms );
+            return AsObjectInFunctorCategoryByFunctions( Hom, functor_on_objects, functor_on_morphisms );
             
         end );
         
@@ -1842,7 +1846,7 @@ InstallMethodWithCache( FunctorCategory,
                 
             end;
             
-            return AsObjectInFunctorCategory( Hom, functor_on_objects, functor_on_morphisms );
+            return AsObjectInFunctorCategoryByFunctions( Hom, functor_on_objects, functor_on_morphisms );
             
           end );
           
@@ -1871,7 +1875,7 @@ InstallMethodWithCache( FunctorCategory,
                 
             end;
             
-            return AsObjectInFunctorCategory( Hom, functor_on_objects, functor_on_morphisms );
+            return AsObjectInFunctorCategoryByFunctions( Hom, functor_on_objects, functor_on_morphisms );
             
           end );
           
@@ -1900,7 +1904,7 @@ InstallMethodWithCache( FunctorCategory,
                 
             end;
             
-            return AsObjectInFunctorCategory( Hom, functor_on_objects, functor_on_morphisms );
+            return AsObjectInFunctorCategoryByFunctions( Hom, functor_on_objects, functor_on_morphisms );
             
           end );
         
@@ -1935,7 +1939,7 @@ InstallMethodWithCache( FunctorCategory,
                 return IdentityMorphism( C, TensorUnit( C ) );
             end;
             
-            return AsObjectInFunctorCategory( Hom, functor_on_objects, functor_on_morphisms );
+            return AsObjectInFunctorCategoryByFunctions( Hom, functor_on_objects, functor_on_morphisms );
             
         end );
         
@@ -1957,7 +1961,7 @@ InstallMethodWithCache( FunctorCategory,
                                ApplyObjectInFunctorCategoryToMorphism( Hom, G, morB ) );
             end;
             
-            return AsObjectInFunctorCategory( Hom, functor_on_objects, functor_on_morphisms );
+            return AsObjectInFunctorCategoryByFunctions( Hom, functor_on_objects, functor_on_morphisms );
             
         end );
         

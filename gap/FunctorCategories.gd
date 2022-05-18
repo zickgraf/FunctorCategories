@@ -96,7 +96,7 @@ end );
 DeclareAttribute( "UnderlyingCapTwoCategoryCell",
         IsCellInFunctorCategory );
 
-CapJitAddTypeSignature( "UnderlyingCapTwoCategoryCell", [ IsObjectInFunctorCategory ],
+CapJitAddTypeSignature( "UnderlyingCapTwoCategoryCell", [ IsCapCategory, IsObjectInFunctorCategory ],
   function ( input_types )
     
     return rec( filter := IsCapFunctor,
@@ -105,7 +105,7 @@ CapJitAddTypeSignature( "UnderlyingCapTwoCategoryCell", [ IsObjectInFunctorCateg
     
 end );
 
-CapJitAddTypeSignature( "UnderlyingCapTwoCategoryCell", [ IsMorphismInFunctorCategory ],
+CapJitAddTypeSignature( "UnderlyingCapTwoCategoryCell", [ IsCapCategory, IsMorphismInFunctorCategory ],
   function ( input_types )
     
     return rec( filter := IsCapNaturalTransformation,
