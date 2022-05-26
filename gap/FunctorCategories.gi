@@ -1942,7 +1942,7 @@ InstallMethodWithCache( FunctorCategory,
         
         AddTensorProductOnObjects( Hom,
           function ( Hom, F, G )
-            local C, functor_on_objects, functor_on_morphisms;
+            local B, C, functor_on_objects, functor_on_morphisms;
             
             B := Source( Hom );
             C := Range( Hom );
