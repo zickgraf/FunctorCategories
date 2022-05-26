@@ -69,8 +69,7 @@ DeclareAttribute( "Source",
 CapJitAddTypeSignature( "Source", [ IsObjectInFunctorCategory ],
   function ( input_types )
     
-    return rec( filter := IsCapCategory,
-                category := Source( input_types[1].category ) );
+    return CapJitDataTypeOfCategory( Source( input_types[1].category ) );
     
 end );
 
@@ -84,8 +83,7 @@ DeclareAttribute( "Range",
 CapJitAddTypeSignature( "Range", [ IsObjectInFunctorCategory ],
   function ( input_types )
     
-    return rec( filter := IsCapCategory,
-                category := Range( input_types[1].category ) );
+    return CapJitDataTypeOfCategory( Range( input_types[1].category ) );
     
 end );
 
@@ -125,8 +123,8 @@ CapJitAddTypeSignature( "FunctorOnObjects", [ IsObjectInFunctorCategory ],
     
     return rec( filter := IsFunction,
                 signature :=
-                [ [ rec( filter := Source( input_types[1].category )!.object_representation, category := Source( input_types[1].category ) ) ],
-                  rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ) ] );
+                [ [ CapJitDataTypeOfObjectOfCategory( Source( input_types[1].category ) ) ],
+                  CapJitDataTypeOfObjectOfCategory( Range( input_types[1].category ) ) ] );
     
 end );
 
@@ -141,10 +139,10 @@ CapJitAddTypeSignature( "FunctorOnMorphisms", [ IsObjectInFunctorCategory ],
     
     return rec( filter := IsFunction,
                 signature :=
-                [ [ rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ),
-                    rec( filter := Source( input_types[1].category )!.morphism_representation, category := Source( input_types[1].category ) ),
-                    rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ) ],
-                  rec( filter := Range( input_types[1].category )!.morphism_representation, category := Range( input_types[1].category ) ) ] );
+                [ [ CapJitDataTypeOfObjectOfCategory( Range( input_types[1].category ) ),
+                    CapJitDataTypeOfMorphismOfCategory( Source( input_types[1].category ) ),
+                    CapJitDataTypeOfObjectOfCategory( Range( input_types[1].category ) ) ],
+                  CapJitDataTypeOfMorphismOfCategory( Range( input_types[1].category ) ) ] );
     
 end );
 
@@ -159,10 +157,10 @@ CapJitAddTypeSignature( "NaturalTransformationOnObjects", [ IsMorphismInFunctorC
     
     return rec( filter := IsFunction,
                 signature :=
-                [ [ rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ),
-                    rec( filter := Source( input_types[1].category )!.object_representation, category := Source( input_types[1].category ) ),
-                    rec( filter := Range( input_types[1].category )!.object_representation, category := Range( input_types[1].category ) ) ],
-                  rec( filter := Range( input_types[1].category )!.morphism_representation, category := Range( input_types[1].category ) ) ] );
+                [ [ CapJitDataTypeOfObjectOfCategory( Range( input_types[1].category ) ),
+                    CapJitDataTypeOfObjectOfCategory( Source( input_types[1].category ) ),
+                    CapJitDataTypeOfObjectOfCategory( Range( input_types[1].category ) ) ],
+                  CapJitDataTypeOfMorphismOfCategory( Range( input_types[1].category ) ) ] );
     
 end );
 
@@ -231,9 +229,7 @@ CapJitAddTypeSignature( "ValuesOnAllObjects", [ IsObjectInFunctorCategory ],
     Assert( 0, IsFunctorCategory( input_types[1].category ) );
     
     return rec( filter := IsList,
-                element_type :=
-                rec( filter := Range( input_types[1].category )!.object_representation,
-                     category := Range( input_types[1].category ) ) );
+                element_type := CapJitDataTypeOfObjectOfCategory( Range( input_types[1].category ) ) );
     
 end );
 
@@ -251,9 +247,7 @@ CapJitAddTypeSignature( "ValuesOnAllGeneratingMorphisms", [ IsObjectInFunctorCat
     Assert( 0, IsFunctorCategory( input_types[1].category ) );
     
     return rec( filter := IsList,
-                element_type :=
-                rec( filter := Range( input_types[1].category )!.morphism_representation,
-                     category := Range( input_types[1].category ) ) );
+                element_type := CapJitDataTypeOfMorphismOfCategory( Range( input_types[1].category ) ) );
     
 end );
 
@@ -271,9 +265,7 @@ CapJitAddTypeSignature( "ValuesOnAllObjects", [ IsMorphismInFunctorCategory ],
     Assert( 0, IsFunctorCategory( input_types[1].category ) );
     
     return rec( filter := IsList,
-                element_type :=
-                rec( filter := Range( input_types[1].category )!.morphism_representation,
-                     category := Range( input_types[1].category ) ) );
+                element_type := CapJitDataTypeOfMorphismOfCategory( Range( input_types[1].category ) ) );
     
 end );
 

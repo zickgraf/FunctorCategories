@@ -40,8 +40,8 @@ CapJitAddTypeSignature( "FunctorObjectOperation", [ IsCapFunctor ],
     
     return rec( filter := IsFunction,
                 signature :=
-                [ [ rec( filter := input_types[1].source_category!.object_representation, category := input_types[1].source_category ) ],
-                  rec( filter := input_types[1].range_category!.object_representation, category := input_types[1].range_category ) ] );
+                [ [ CapJitDataTypeOfObjectOfCategory( input_types[1].source_category ) ],
+                  CapJitDataTypeOfObjectOfCategory( input_types[1].range_category ) ] );
 end );
 
 CapJitAddTypeSignature( "FunctorMorphismOperation", [ IsCapFunctor ],
@@ -49,10 +49,10 @@ CapJitAddTypeSignature( "FunctorMorphismOperation", [ IsCapFunctor ],
     
     return rec( filter := IsFunction,
                 signature :=
-                [ [ rec( filter := input_types[1].range_category!.object_representation, category := input_types[1].range_category ),
-                    rec( filter := input_types[1].source_category!.morphism_representation, category := input_types[1].source_category ),
-                    rec( filter := input_types[1].range_category!.object_representation, category := input_types[1].range_category ) ],
-                  rec( filter := input_types[1].range_category!.morphism_representation, category := input_types[1].range_category ) ] );
+                [ [ CapJitDataTypeOfObjectOfCategory( input_types[1].range_category ),
+                    CapJitDataTypeOfMorphismOfCategory( input_types[1].source_category ),
+                    CapJitDataTypeOfObjectOfCategory( input_types[1].range_category ) ],
+                  CapJitDataTypeOfMorphismOfCategory( input_types[1].range_category ) ] );
 end );
         
 CapJitAddTypeSignature( "NaturalTransformationOperation", [ IsCapNaturalTransformation ],
@@ -62,10 +62,10 @@ CapJitAddTypeSignature( "NaturalTransformationOperation", [ IsCapNaturalTransfor
     
     return rec( filter := IsFunction,
                 signature :=
-                [ [ rec( filter := input_types[1].range_category!.object_representation, category := input_types[1].range_category ),
-                    rec( filter := input_types[1].source_category!.object_representation, category := input_types[1].source_category ),
-                    rec( filter := input_types[1].range_category!.object_representation, category := input_types[1].range_category ) ],
-                  rec( filter := input_types[1].range_category!.morphism_representation, category := input_types[1].range_category ) ] );
+                [ [ CapJitDataTypeOfObjectOfCategory( input_types[1].range_category ),
+                    CapJitDataTypeOfObjectOfCategory( input_types[1].source_category ),
+                    CapJitDataTypeOfObjectOfCategory( input_types[1].range_category ) ],
+                  CapJitDataTypeOfMorphismOfCategory( input_types[1].range_category ) ] );
 end );
         
 CapJitAddLogicTemplate(

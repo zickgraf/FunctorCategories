@@ -1030,13 +1030,10 @@ InstallMethodWithCache( FunctorCategory,
     SetSource( Hom, B );
     SetRange( Hom, C );
 
-    Hom!.compiler_hints :=
-      rec(
-          category_attribute_names :=
-          [ "Source",
-            "Range",
-            ]
-          );
+    Hom!.compiler_hints.category_attribute_names := [
+        "Source",
+        "Range",
+    ];
     
     ## setting the cache comparison to IsIdenticalObj
     ## boosts the performance considerably
