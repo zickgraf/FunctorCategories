@@ -31,7 +31,10 @@ jobs:
           cd /home/gap/.gap/pkg/
           cp ./FunctorCategories/ci_gaprc /home/gap/.gap/gaprc
           git clone --depth 1 https://github.com/gap-packages/AutoDoc.git
-          git clone --depth 1 https://github.com/homalg-project/homalg_project.git
+          git clone https://github.com/mohamed-barakat/homalg_project.git
+          cd homalg_project
+          git checkout lazy
+          cd ..
           git clone --depth 1 https://github.com/homalg-project/CAP_project.git
           git clone --depth 1 https://github.com/homalg-project/CategoryConstructor.git
           git clone --depth 1 https://github.com/homalg-project/HigherHomologicalAlgebra.git
