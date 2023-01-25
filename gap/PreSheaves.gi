@@ -998,32 +998,64 @@ InstallMethodWithCache( PreSheavesOfFpEnrichedCategory,
         
         AddIsEqualForObjects( PSh,
           function ( PSh, F, G )
-            local C;
+            local C, defining_pair, nr_objs, mors, nr_mors;
             
             C := Range( PSh );
             
-            return ForAll( objects, o -> IsEqualForObjects( C, F( o ), G( o ) ) ) and
-                   ForAll( generating_morphisms, m -> IsEqualForMorphisms( C, F( m ), G( m ) ) );
+            defining_pair := DefiningPairOfUnderlyingQuiver( Source( PSh ) );
+            
+            nr_objs := defining_pair[1];
+            mors := defining_pair[2];
+            nr_mors := Length( mors );
+            
+            #values_of_all_objects := LazyHList( [ 1 .. nr_objs ], o -> presheaf_on_objects( o ) );
+            #values_of_all_generating_morphisms := LazyHList( [ 1 .. nr_mors ], m -> presheaf_on_generating_morphisms(
+            #                                              presheaf_on_objects( 1 + mors[m][2] ),
+            #                                              m,
+            #                                              presheaf_on_objects( 1 + mors[m][1] ) ) );
+    
+            
+            #object_values_F := ValuesOnAllObjects( F );
+            #object_values_G := ValuesOnAllObjects( G );
+            
+            return ForAll( [ 1 .. nr_objs ], objB_index -> IsEqualForObjects( C, ValuesOfPreSheaf( F )[1][objB_index], ValuesOfPreSheaf( G )[1][objB_index] ) ) and
+                   ForAll( [ 1 .. nr_mors ], morB_index -> IsEqualForMorphisms( C, ValuesOfPreSheaf( F )[2][morB_index], ValuesOfPreSheaf( G )[2][morB_index] ) );
+            
+            
+            #return ForAll( objects, o -> IsEqualForObjects( C, F( o ), G( o ) ) ) and
+            #       ForAll( generating_morphisms, m -> IsEqualForMorphisms( C, F( m ), G( m ) ) );
             
           end );
         
         AddIsEqualForMorphisms( PSh,
           function ( PSh, eta, epsilon )
-            local C;
+            local C, defining_pair, nr_objs;
             
             C := Range( PSh );
             
-            return ForAll( objects, o -> IsEqualForMorphisms( C, eta( o ), epsilon( o ) ) );
+            defining_pair := DefiningPairOfUnderlyingQuiver( Source( PSh ) );
+            
+            nr_objs := defining_pair[1];
+            
+            return ForAll( [ 1 .. nr_objs ], objB_index -> IsEqualForMorphisms( C, ValuesOnAllObjects( eta )[objB_index], ValuesOnAllObjects( epsilon )[objB_index] ) );
+            
+            #return ForAll( objects, o -> IsEqualForMorphisms( C, eta( o ), epsilon( o ) ) );
             
           end );
         
         AddIsCongruentForMorphisms( PSh,
           function ( PSh, eta, epsilon )
-            local C;
+            local C, defining_pair, nr_objs;
             
             C := Range( PSh );
             
-            return ForAll( objects, o -> IsCongruentForMorphisms( C, eta( o ), epsilon( o ) ) );
+            defining_pair := DefiningPairOfUnderlyingQuiver( Source( PSh ) );
+            
+            nr_objs := defining_pair[1];
+            
+            return ForAll( [ 1 .. nr_objs ], objB_index -> IsCongruentForMorphisms( C, ValuesOnAllObjects( eta )[objB_index], ValuesOnAllObjects( epsilon )[objB_index] ) );
+            
+            #return ForAll( objects, o -> IsCongruentForMorphisms( C, eta( o ), epsilon( o ) ) );
             
           end );
           
